@@ -1,0 +1,28 @@
+{
+  "name": "my-unsplash-app",
+  "version": "1.0.0",
+  "description": " an app to display different images",
+  "main": "server.js",
+  "scripts": {
+    "server": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/debo9210/unsplash-app.git"
+  },
+  "author": "debo9210",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/debo9210/unsplash-app/issues"
+  },
+  "homepage": "https://github.com/debo9210/unsplash-app#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.9"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
