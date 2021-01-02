@@ -1,3 +1,115 @@
+/* general styles */
 .App {
-  text-align: center;
+  /* text-align: center; */
+  /* border: 1px solid orangered; */
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* heading styles */
+.HeadingContainer {
+  /* outline: 1px solid blue; */
+  margin: 25px 0 0 0;
+  display: flex;
+  align-items: center;
+}
+
+.Brand {
+  /* outline: 1px solid red; */
+  margin-right: 20px;
+}
+
+.InputGroup {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.SearchInput {
+  width: 120%;
+  height: 50px;
+  border: 1px solid #bdbdbd;
+  box-sizing: border-box;
+  filter: drop-shadow(0px 1px 6px rgba(0, 0, 0, 0.1));
+  border-radius: 12px;
+  background-repeat: no-repeat;
+  background-position: 9px 13px;
+  padding: 14px;
+  outline: none;
+  text-indent: 30px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  color: #494848;
+}
+
+.SearchInput::placeholder {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #bdbdbd;
+}
+
+.AddPhotoBtn {
+  width: 137px;
+  height: 50px;
+  background: #3db46d;
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  border: none;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  color: #ffffff;
+  cursor: pointer;
+  outline: none;
+}
+
+/* photoGrid styles */
+.PhotoGridContainer {
+  outline: 1px solid orangered;
+  margin: 50px 0 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.PhotoGrid {
+  width: 382.87px;
+  height: 306.29px;
+  border-radius: 16px;
+  margin-bottom: 35px;
+}
+
+.green {
+  background: green;
+}
+
+.purple {
+  background: orchid;
+}
+
+.orange {
+  background: rgb(241, 167, 29);
+}
+
+.tomato {
+  background: tomato;
+  height: 582.48px;
+}
+
+.blue {
+  background: rgb(63, 63, 228);
+  height: 506.29px;
+}
+
+.yellow {
+  background: yellowgreen;
+}
+
+.pink {
+  background: palevioletred;
+  height: 574px;
 }

@@ -1,9 +1,12 @@
 import './App.css';
+import HeadingComponent from './components/HeadingComponent';
+import PhotoGrid from './components/PhotoGrid';
 
 function App() {
   return (
     <div className='App'>
-      <h1>My Unsplash App</h1>
+      <HeadingComponent />
+      <PhotoGrid />
     </div>
   );
 }
