@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPhotos } from '../redux/photoActions';
+import { getPhotos, getPhotoByLabel } from '../redux/photoActions';
 import PhotoComp from './PhotoComponent';
 import Loader from './Loader';
+import HeadingComponent from './HeadingComponent';
 
 const PhotoGrid = () => {
   const dispatch = useDispatch();
 
   const [photoGrid, setPhotoGrid] = useState([]);
+  const [inputValue, setInputValue] = useState('');
 
   const { error, loading, photoArray } = useSelector(
     (state) => state.allPhotos
@@ -29,6 +31,22 @@ const PhotoGrid = () => {
     );
   }
 
+  const inputValueHandler = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const getPhotoByLabelHandler = (e) => {
+    dispatch(getPhotoByLabel(inputValue));
+    e.target.value = '';
+  };
+
+  const getPhotoLabel = (e) => {
+    if (e.keyCode === 13) {
+      dispatch(getPhotoByLabel(inputValue));
+      e.target.value = '';
+    }
+  };
+
   useEffect(() => {
     let reverse;
     if (photoArray) {
@@ -42,7 +60,16 @@ const PhotoGrid = () => {
     dispatch(getPhotos());
   }, [dispatch]);
 
-  return <>{loading ? <Loader /> : displayPhoto}</>;
+  return (
+    <>
+      <HeadingComponent
+        getInputValue={inputValueHandler}
+        getPhotoByLabelHandler={getPhotoByLabelHandler}
+        getPhotoLabel={getPhotoLabel}
+      />
+      {loading ? <Loader /> : displayPhoto}
+    </>
+  );
 };
 
 export default PhotoGrid;
