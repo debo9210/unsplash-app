@@ -1,8 +1,15 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import {
+  getPhotosReducer,
+  getPhotoByLabelReducer,
+} from './redux/photoReducers';
 
-const reducers = combineReducers({});
+const reducers = combineReducers({
+  allPhotos: getPhotosReducer,
+  photoByLabel: getPhotoByLabelReducer,
+});
 const initialState = {};
 
 const middleware = [thunk];

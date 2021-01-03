@@ -6,6 +6,78 @@
   margin: 0 auto;
 }
 
+/* loader styles */
+.lds-grid {
+  display: block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  /* border: 1px solid red; */
+  margin: 150px auto 0 auto;
+}
+.lds-grid div {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgb(73, 70, 70);
+  animation: lds-grid 1.2s linear infinite;
+}
+.lds-grid div:nth-child(1) {
+  top: 8px;
+  left: 8px;
+  animation-delay: 0s;
+}
+.lds-grid div:nth-child(2) {
+  top: 8px;
+  left: 32px;
+  animation-delay: -0.4s;
+}
+.lds-grid div:nth-child(3) {
+  top: 8px;
+  left: 56px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(4) {
+  top: 32px;
+  left: 8px;
+  animation-delay: -0.4s;
+}
+.lds-grid div:nth-child(5) {
+  top: 32px;
+  left: 32px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(6) {
+  top: 32px;
+  left: 56px;
+  animation-delay: -1.2s;
+}
+.lds-grid div:nth-child(7) {
+  top: 56px;
+  left: 8px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(8) {
+  top: 56px;
+  left: 32px;
+  animation-delay: -1.2s;
+}
+.lds-grid div:nth-child(9) {
+  top: 56px;
+  left: 56px;
+  animation-delay: -1.6s;
+}
+@keyframes lds-grid {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 /* heading styles */
 .HeadingContainer {
   /* outline: 1px solid blue; */
@@ -69,47 +141,49 @@
 
 /* photoGrid styles */
 .PhotoGridContainer {
-  outline: 1px solid orangered;
-  margin: 50px 0 0 0;
+  height: 200vh;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-between;
+  margin-top: 50px;
+  /* border: 1px solid blue; */
+  opacity: 1;
 }
 
-.PhotoGrid {
-  width: 382.87px;
+.Cell {
+  /* background: #e91e63; */
+  width: 385.5px;
   height: 306.29px;
-  border-radius: 16px;
-  margin-bottom: 35px;
+  display: flex;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  margin-right: 26.5px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  transition: 0.8s opacity;
 }
 
-.green {
-  background: green;
+.Cell:hover {
+  opacity: 0.5;
 }
 
-.purple {
-  background: orchid;
-}
-
-.orange {
-  background: rgb(241, 167, 29);
-}
-
-.tomato {
-  background: tomato;
+.c4 {
+  width: 388.5px;
   height: 582.48px;
 }
 
-.blue {
-  background: rgb(63, 63, 228);
-  height: 506.29px;
+.c5 {
+  width: 388.5px;
+  height: 578.25px;
 }
 
-.yellow {
-  background: yellowgreen;
+.c6 {
+  /* order: 6; */
+  height: 287.11px;
 }
 
-.pink {
-  background: palevioletred;
-  height: 574px;
+.c7 {
+  height: 574.31px;
 }

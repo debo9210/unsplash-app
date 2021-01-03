@@ -67,75 +67,92 @@ router.get('/photo/all', (req, res) => {
 });
 
 // @ route GET /api/unsplash-app/photo
+// @ description get image by label name
+// @ access Public
+router.get('/photo/label/:labelName', (req, res) => {
+  let errors = {};
+  let labelName = req.params.labelName.toLowerCase();
+  Image.find({ label: labelName })
+    .then((image) => {
+      if (image.length === 0) {
+        errors.imageError = 'This label has no image attached to it';
+        return res.status(404).json(errors);
+      }
+      return res.json(image);
+    })
+    .catch((err) => res.status(404).json({ message: 'No Images Found' }));
+});
+
+// @ route GET /api/unsplash-app/photo
 // @ description get image by file name
 // @ access Public
-// router.get('/photo/:filename', (req, res) => {
-//   let errors = {};
+router.get('/photo/:filename', (req, res) => {
+  let errors = {};
 
-//   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-//     //check if file exists
-//     if (!file || file.length === 0 || file === null) {
-//       errors.fileError = 'No file exists';
-//       return res.status(404).json(errors);
-//     }
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    //check if file exists
+    if (!file || file.length === 0 || file === null) {
+      errors.fileError = 'No file exists';
+      return res.status(404).json(errors);
+    }
 
-//     //check file content type
-//     if (
-//       file.contentType === 'image/jpeg' ||
-//       file.contentType === 'image/jpg' ||
-//       file.contentType === 'image/png'
-//     ) {
-//       //read to browser
-//       const readStream = gridFSBucket.openDownloadStream(file._id);
-//       //   const readStream = gfs.createReadStream(file.filename);
-//       readStream.pipe(res);
-//       //   console.log(file);
-//     } else {
-//       errors.fileError = 'Not an image';
-//       res.status(404).json(errors);
-//     }
-//   });
-// });
+    //check file content type
+    if (
+      file.contentType === 'image/jpeg' ||
+      file.contentType === 'image/jpg' ||
+      file.contentType === 'image/png'
+    ) {
+      //read to browser
+      const readStream = gridFSBucket.openDownloadStream(file._id);
+      //   const readStream = gfs.createReadStream(file.filename);
+      readStream.pipe(res);
+      //   console.log(file);
+    } else {
+      errors.fileError = 'Not an image';
+      res.status(404).json(errors);
+    }
+  });
+});
 
 // @ route GET /api/unsplash-app/photo
 // @ description get image by id
 // @ access Public
-router.get('/photo/:id', (req, res) => {
-  const errors = {};
+// router.get('/photo/:id', (req, res) => {
+//   const errors = {};
 
-  Image.findById(req.params.id)
-    .then((image) => {
-      if (!image) {
-        errors.imageError = 'No Image for the specified ID';
-        return res.status(404).json(errors);
-      }
+//   Image.findById(req.params.id)
+//     .then((image) => {
+//       if (!image) {
+//         errors.imageError = 'No Image for the specified ID';
+//         return res.status(404).json(errors);
+//       }
 
-      //   res.json(image);
+//       //   res.json(image);
 
-      gfs.files.findOne({ filename: image.imageFileName }, (err, file) => {
-        //check if files exist
-        if (!file || file.length === 0 || file === null) {
-          errors.imageError = 'No file exists';
-          return res.status(404).json(errors);
-        }
+//       gfs.files.findOne({ filename: image.imageFileName }, (err, file) => {
+//         //check if files exist
+//         if (!file || file.length === 0 || file === null) {
+//           errors.imageError = 'No file exists';
+//           return res.status(404).json(errors);
+//         }
 
-        //check content type
-        if (
-          file.contentType === 'image/jpeg' ||
-          file.contentType === 'image/jpg' ||
-          file.contentType === 'image/png'
-        ) {
-          //read to browser
-          const readStream = gridFSBucket.openDownloadStream(file._id);
-          readStream.pipe(res);
-        } else {
-          errors.imageError = 'Not an image';
-          res.status(404).json(errors);
-        }
-      });
-    })
-    .catch((err) => res.status(404).json(err));
-});
+//         //check content type
+//         if (
+//           file.contentType === 'image/jpeg' ||
+//           file.contentType === 'image/jpg' ||
+//           file.contentType === 'image/png'
+//         ) {
+//           //read to browser
+//           const readStream = gridFSBucket.openDownloadStream(file._id);
+//           readStream.pipe(res);
+//         } else {
+//           errors.imageError = 'Not an image';
+//           res.status(404).json(errors);
+//         }
+//       });
+//     })
+//     .catch((err) => res.status(404).json(err));
+// });
 
 // @ route Post /api/unsplash-app/photo
 // @ description upload image to db route
@@ -165,7 +182,7 @@ router.post('/photo', upload.single('image'), (req, res) => {
     } else {
       // create new image object
       const newImage = new Image({
-        label: req.body.label,
+        label: req.body.label.toLowerCase(),
         imageLink: `${url}/api/unsplash-app/photo/${req.file.filename}`,
         imageFileName: req.file.filename,
       });
