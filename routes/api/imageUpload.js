@@ -199,6 +199,25 @@ router.post('/photo', upload.single('image'), (req, res) => {
   // });
 });
 
+// @ route Post /api/unsplash-app/photo
+// @ description post  image to db route
+// @ access Public
+router.post('/photo/byUrl/', (req, res) => {
+  const { errors, isValid } = validateImageUpload(req.body);
+
+  //check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  // create new image object
+  const newImage = new Image({
+    label: req.body.label.toLowerCase(),
+    imageLink: req.body.photoUrl,
+  });
+  newImage.save().then((image) => res.json(image));
+});
+
 // @ route Delete /api/unsplash-app/photo
 // @ description delete image from database
 // @ access Public

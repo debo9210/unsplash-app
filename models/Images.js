@@ -12,7 +12,6 @@ const ImageSchema = new Schema({
   },
   imageFileName: {
     type: String,
-    required: true,
   },
   date: {
     type: Date,
