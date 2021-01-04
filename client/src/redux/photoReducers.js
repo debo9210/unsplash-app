@@ -35,7 +35,7 @@ export const getPhotoByLabelReducer = (state = [], action) => {
       return {
         ...state,
         loading: false,
-        photoByLabel: action.payload,
+        photoByLabelArray: action.payload,
       };
     case GET_PHOTO_BY_LABEL_FAIL:
       return {

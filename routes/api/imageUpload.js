@@ -174,21 +174,29 @@ router.post('/photo', upload.single('image'), (req, res) => {
 
   const url = req.protocol + '://' + req.get('host');
 
-  //check if image name already exists
-  Image.findOne({ label: req.body.label }).then((image) => {
-    if (image) {
-      errors.imageError = 'This name already has an image attached to it';
-      return res.status(400).json(errors);
-    } else {
-      // create new image object
-      const newImage = new Image({
-        label: req.body.label.toLowerCase(),
-        imageLink: `${url}/api/unsplash-app/photo/${req.file.filename}`,
-        imageFileName: req.file.filename,
-      });
-      newImage.save().then((image) => res.json(image));
-    }
+  // create new image object
+  const newImage = new Image({
+    label: req.body.label.toLowerCase(),
+    imageLink: `${url}/api/unsplash-app/photo/${req.file.filename}`,
+    imageFileName: req.file.filename,
   });
+  newImage.save().then((image) => res.json(image));
+
+  // //check if image name already exists
+  // Image.findOne({ label: req.body.label }).then((image) => {
+  //   if (image) {
+  //     errors.imageError = 'This name already has an image attached to it';
+  //     return res.status(400).json(errors);
+  //   } else {
+  //     // create new image object
+  //     const newImage = new Image({
+  //       label: req.body.label.toLowerCase(),
+  //       imageLink: `${url}/api/unsplash-app/photo/${req.file.filename}`,
+  //       imageFileName: req.file.filename,
+  //     });
+  //     newImage.save().then((image) => res.json(image));
+  //   }
+  // });
 });
 
 // @ route Delete /api/unsplash-app/photo

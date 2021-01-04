@@ -84,6 +84,7 @@
   margin: 25px 0 0 0;
   display: flex;
   align-items: center;
+  margin-bottom: 50px;
 }
 
 .Brand {
@@ -146,7 +147,7 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  margin-top: 50px;
+  /* margin-top: 50px; */
   /* border: 1px solid blue; */
   opacity: 1;
 }
@@ -186,4 +187,35 @@
 
 .c7 {
   height: 574.31px;
+}
+
+/* error styles */
+.ErrorAlert {
+  margin-top: 30px;
+}
+
+/* photo by label styles */
+.PhotoByLabelContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3%;
+  /* justify-content: space-between; */
+  /* border: 1px solid blue; */
+}
+
+.PhotoByLabel {
+  width: 31.33%;
+  height: 306.29px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  /* margin-right: 2%; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  transition: 0.8s opacity;
+}
+
+.PhotoByLabel:hover {
+  opacity: 0.5;
 }

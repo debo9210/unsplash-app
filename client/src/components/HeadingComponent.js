@@ -3,11 +3,7 @@ import React from 'react';
 import UnsplashLogo from '../svg/my_unsplash_logo.svg';
 import searchIcon from '../svg/search-black-18dp.svg';
 
-const HeadingComponent = ({
-  getInputValue,
-  getPhotoByLabelHandler,
-  getPhotoLabel,
-}) => {
+const HeadingComponent = ({ getInputValue, getPhotoByLabelHandler }) => {
   return (
     <>
       <header className='HeadingContainer'>
@@ -18,12 +14,11 @@ const HeadingComponent = ({
           <div>
             <input
               type='text'
-              placeholder='Search by name'
+              placeholder='Search by label'
               className='SearchInput'
               style={{ backgroundImage: `url(${searchIcon})` }}
               onChange={getInputValue}
               onBlur={getPhotoByLabelHandler}
-              onKeyDown={getPhotoLabel}
             />
           </div>
           <button className='AddPhotoBtn'>Add a photo</button>

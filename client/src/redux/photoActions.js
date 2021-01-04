@@ -3,6 +3,7 @@ import {
   GET_ALL_PHOTO_REQUEST,
   GET_ALL_PHOTO_SUCCESS,
   GET_PHOTO_BY_LABEL_FAIL,
+  GET_PHOTO_BY_LABEL_REQUEST,
   GET_PHOTO_BY_LABEL_SUCCESS,
 } from './constants';
 import axios from 'axios';
@@ -20,14 +21,14 @@ export const getPhotos = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_ALL_PHOTO_FAIL,
-      payload: error.message,
+      payload: error.response.data,
     });
   }
 };
 
 export const getPhotoByLabel = (labelName) => async (dispatch) => {
   try {
-    dispatch({ type: GET_PHOTO_BY_LABEL_SUCCESS });
+    dispatch({ type: GET_PHOTO_BY_LABEL_REQUEST });
 
     const { data } = await axios.get(
       `/api/unsplash-app/photo/label/${labelName}`
