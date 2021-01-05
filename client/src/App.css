@@ -219,3 +219,47 @@
 .PhotoByLabel:hover {
   opacity: 0.5;
 }
+
+/* add photo styles */
+.AddPhotoContainer {
+  border: 1px solid grey;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px 30px;
+  width: 40%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.AddPhotoHeading {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+.PhotoLabel {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  color: #4f4f4f;
+  margin-bottom: 5px;
+}
+
+.BtnGroup {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.SubmitBtn {
+  margin-left: 10px;
+}
+
+.ErrorText {
+  color: tomato;
+  /* font-size: 30px; */
+  font-style: italic;
+}

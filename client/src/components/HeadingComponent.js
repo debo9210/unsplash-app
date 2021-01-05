@@ -3,7 +3,11 @@ import React from 'react';
 import UnsplashLogo from '../svg/my_unsplash_logo.svg';
 import searchIcon from '../svg/search-black-18dp.svg';
 
-const HeadingComponent = ({ getInputValue, getPhotoByLabelHandler }) => {
+const HeadingComponent = ({
+  getInputValue,
+  getPhotoByLabelHandler,
+  showForm,
+}) => {
   return (
     <>
       <header className='HeadingContainer'>
@@ -21,7 +25,9 @@ const HeadingComponent = ({ getInputValue, getPhotoByLabelHandler }) => {
               onBlur={getPhotoByLabelHandler}
             />
           </div>
-          <button className='AddPhotoBtn'>Add a photo</button>
+          <button onClick={showForm} className='AddPhotoBtn'>
+            Add a photo
+          </button>
         </div>
       </header>
     </>

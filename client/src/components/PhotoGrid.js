@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPhotos, getPhotoByLabel } from '../redux/photoActions';
+import {
+  getPhotos,
+  getPhotoByLabel,
+  uploadPhotoByUrl,
+} from '../redux/photoActions';
 import { Alert, Button } from 'react-bootstrap';
 import PhotoComp from './PhotoComponent';
 import Loader from './Loader';
 import HeadingComponent from './HeadingComponent';
 import PhotoLabelComp from './PhotoLabelComponent';
+import AddPhotoComp from './AddPhotoComp';
 
 const PhotoGrid = () => {
   const dispatch = useDispatch();
@@ -14,6 +19,13 @@ const PhotoGrid = () => {
   const [inputValue, setInputValue] = useState('');
   const [photoLabel, setPhotoLabel] = useState(false);
   const [allPhoto, setAllPhoto] = useState(false);
+  const [labelValue, setLabelValue] = useState('');
+  const [urlValue, setUrlValue] = useState('');
+
+  const [addPhotoForm, setAddPhotoForm] = useState(false);
+
+  const labelRef = useRef(null);
+  const urlRef = useRef(null);
 
   const { error, loading, photoArray } = useSelector(
     (state) => state.allPhotos
@@ -24,6 +36,8 @@ const PhotoGrid = () => {
     loading: loadingPhotoByLabel,
     photoByLabelArray,
   } = useSelector((state) => state.photoByLabel);
+
+  const { error: uploadError } = useSelector((state) => state.uploadedPhoto);
 
   let displayPhoto;
   if (photoGrid.length !== 0) {
@@ -66,6 +80,30 @@ const PhotoGrid = () => {
     setPhotoLabel(true);
   };
 
+  const addPhotoHandler = () => {
+    dispatch(uploadPhotoByUrl(labelValue, urlValue));
+    labelRef.current.value = '';
+    urlRef.current.value = '';
+    setLabelValue('');
+    setUrlValue('');
+  };
+
+  const labelValueHandler = (e) => {
+    setLabelValue(e.target.value);
+  };
+
+  const urlValueHandler = (e) => {
+    setUrlValue(e.target.value);
+  };
+
+  const showFormHandler = () => {
+    setAddPhotoForm(true);
+  };
+
+  const hideFormHandler = () => {
+    setAddPhotoForm(false);
+  };
+
   // const getPhotoLabel = (e) => {
   //   if (e.keyCode === 13) {
   //     dispatch(getPhotoByLabel(inputValue));
@@ -93,6 +131,7 @@ const PhotoGrid = () => {
       <HeadingComponent
         getInputValue={inputValueHandler}
         getPhotoByLabelHandler={getPhotoByLabelHandler}
+        showForm={showFormHandler}
       />
       {error && (
         <Alert
@@ -118,6 +157,17 @@ const PhotoGrid = () => {
       )}
       {loading || loadingPhotoByLabel ? <Loader /> : null}
       {allPhoto ? displayPhoto : photoLabel ? photoByLabel : null}
+      {/* {addPhotoForm ? (
+        <AddPhotoComp
+          submitBtnHandler={addPhotoHandler}
+          labelValue={labelValueHandler}
+          urlValue={urlValueHandler}
+          labelRef={labelRef}
+          urlRef={urlRef}
+          hideForm={hideFormHandler}
+          uploadError={uploadError}
+        />
+      ) : null} */}
     </>
   );
 };

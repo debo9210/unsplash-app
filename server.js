@@ -1,9 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const imageUploadApi = require('./routes/api/imageUpload');
 
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 //DB config
 const db = require('./config/keys').mongoURI;

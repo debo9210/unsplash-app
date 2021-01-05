@@ -4,11 +4,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import {
   getPhotosReducer,
   getPhotoByLabelReducer,
+  uploadPhotoReducer,
 } from './redux/photoReducers';
 
 const reducers = combineReducers({
   allPhotos: getPhotosReducer,
   photoByLabel: getPhotoByLabelReducer,
+  uploadedPhoto: uploadPhotoReducer,
 });
 const initialState = {};
 

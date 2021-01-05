@@ -181,31 +181,15 @@ router.post('/photo', upload.single('image'), (req, res) => {
     imageFileName: req.file.filename,
   });
   newImage.save().then((image) => res.json(image));
-
-  // //check if image name already exists
-  // Image.findOne({ label: req.body.label }).then((image) => {
-  //   if (image) {
-  //     errors.imageError = 'This name already has an image attached to it';
-  //     return res.status(400).json(errors);
-  //   } else {
-  //     // create new image object
-  //     const newImage = new Image({
-  //       label: req.body.label.toLowerCase(),
-  //       imageLink: `${url}/api/unsplash-app/photo/${req.file.filename}`,
-  //       imageFileName: req.file.filename,
-  //     });
-  //     newImage.save().then((image) => res.json(image));
-  //   }
-  // });
 });
 
-// @ route Post /api/unsplash-app/photo
+// @ route Post /api/unsplash-app/photo/byUrl
 // @ description post  image to db route
 // @ access Public
-router.post('/photo/byUrl/', (req, res) => {
+router.post('/photo/byUrl', (req, res) => {
   const { errors, isValid } = validateImageUpload(req.body);
 
-  //check validation
+  // check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
@@ -216,6 +200,7 @@ router.post('/photo/byUrl/', (req, res) => {
     imageLink: req.body.photoUrl,
   });
   newImage.save().then((image) => res.json(image));
+  // res.json({ success: true });
 });
 
 // @ route Delete /api/unsplash-app/photo
