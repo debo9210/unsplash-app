@@ -5,12 +5,14 @@ import {
   getPhotosReducer,
   getPhotoByLabelReducer,
   uploadPhotoReducer,
+  deletePhotoReducer,
 } from './redux/photoReducers';
 
 const reducers = combineReducers({
   allPhotos: getPhotosReducer,
   photoByLabel: getPhotoByLabelReducer,
   uploadedPhoto: uploadPhotoReducer,
+  deletePhoto: deletePhotoReducer,
 });
 const initialState = {};
 

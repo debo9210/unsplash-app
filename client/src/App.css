@@ -6,6 +6,55 @@
   margin: 0 auto;
 }
 
+.PhotoText {
+  font-family: 'Montserrat' sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+  /* border: 1px solid red; */
+  margin: 0 0 25px 20px;
+  display: none;
+}
+
+.PhotoTextContainer {
+  /* border: 1px solid yellow; */
+  display: flex;
+  align-items: flex-end;
+  /* height: 20%; */
+}
+
+.DeleteBtnContainer {
+  /* border: 1px solid green; */
+  /* height: 20%; */
+  display: none;
+}
+
+.DeleteBtn {
+  width: 63px;
+  height: 23px;
+  border: 1px solid #eb5757;
+  border-radius: 38px;
+  font-family: 'Montserrat' sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 12px;
+  text-transform: lowercase;
+  color: #eb5757;
+  background: none;
+  margin: 15px 20px;
+}
+
+.MouseOver {
+  display: flex;
+  justify-content: space-between;
+  /* border: 1px solid yellow; */
+  width: 100%;
+  /* display: none; */
+}
+
 /* loader styles */
 .lds-grid {
   display: block;
@@ -85,6 +134,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 50px;
+  /* position: fixed; */
 }
 
 .Brand {
@@ -138,6 +188,7 @@
   color: #ffffff;
   cursor: pointer;
   outline: none;
+  margin-left: 50px;
 }
 
 /* photoGrid styles */
@@ -164,10 +215,12 @@
   background-size: cover;
   background-position: center;
   transition: 0.8s opacity;
+  /* border: 1px solid red; */
 }
 
 .Cell:hover {
-  opacity: 0.5;
+  /* opacity: 0.5; */
+  filter: brightness(60%);
 }
 
 .c4 {
@@ -228,7 +281,22 @@
   padding: 20px 30px;
   width: 40%;
   margin: 0 auto;
-  position: relative;
+  position: absolute;
+  top: 150px;
+  left: 405px;
+  z-index: 2;
+}
+
+.DeletePhotoContainer {
+  border: 1px solid grey;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px 30px;
+  width: 40%;
+  margin: 0 auto;
+  position: absolute;
+  top: 150px;
+  left: 405px;
   z-index: 2;
 }
 
@@ -262,4 +330,17 @@
   color: tomato;
   /* font-size: 30px; */
   font-style: italic;
+}
+
+.Footer {
+  margin-top: 20px;
+}
+
+.FooterText {
+  font-family: 'Montserrat' sans-serif;
+  text-align: center;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: #a9a9a9;
 }

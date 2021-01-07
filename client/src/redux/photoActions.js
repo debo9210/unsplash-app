@@ -1,4 +1,7 @@
 import {
+  DELETE_PHOTO_FAIL,
+  DELETE_PHOTO_REQUEST,
+  DELETE_PHOTO_SUCCESS,
   GET_ALL_PHOTO_FAIL,
   GET_ALL_PHOTO_REQUEST,
   GET_ALL_PHOTO_SUCCESS,
@@ -78,4 +81,22 @@ export const uploadPhotoByUrl = (labelValue, urlValue) => (dispatch) => {
         payload: error.response.data,
       })
     );
+};
+
+export const deletePhoto = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_PHOTO_REQUEST });
+
+    const { data } = await axios.delete(`/api/unsplash-app/photo/remove/${id}`);
+
+    dispatch({
+      type: DELETE_PHOTO_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_PHOTO_FAIL,
+      payload: error.response.data,
+    });
+  }
 };

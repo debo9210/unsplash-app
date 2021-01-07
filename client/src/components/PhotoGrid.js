@@ -4,6 +4,7 @@ import {
   getPhotos,
   getPhotoByLabel,
   uploadPhotoByUrl,
+  deletePhoto,
 } from '../redux/photoActions';
 import { Alert, Button } from 'react-bootstrap';
 import PhotoComp from './PhotoComponent';
@@ -11,6 +12,7 @@ import Loader from './Loader';
 import HeadingComponent from './HeadingComponent';
 import PhotoLabelComp from './PhotoLabelComponent';
 import AddPhotoComp from './AddPhotoComp';
+import DeletePhotoComp from './DeletePhotoComp';
 
 const PhotoGrid = () => {
   const dispatch = useDispatch();
@@ -21,11 +23,17 @@ const PhotoGrid = () => {
   const [allPhoto, setAllPhoto] = useState(false);
   const [labelValue, setLabelValue] = useState('');
   const [urlValue, setUrlValue] = useState('');
-
   const [addPhotoForm, setAddPhotoForm] = useState(false);
+  const [deletePhotoForm, setDeletePhotoForm] = useState(false);
+  const [photoID, setPhotoID] = useState('');
+  const [deletePassword, setDeletePassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   const labelRef = useRef(null);
   const urlRef = useRef(null);
+  const pwdRef = useRef(null);
 
   const { error, loading, photoArray } = useSelector(
     (state) => state.allPhotos
@@ -39,34 +47,51 @@ const PhotoGrid = () => {
 
   const { error: uploadError } = useSelector((state) => state.uploadedPhoto);
 
+  const DeleteBtnControl = (e) => {
+    setDeletePhotoForm(true);
+    setPhotoID(e.target.id);
+    document.querySelector('body').style.background = '#bfbfbf';
+    document.querySelector('body').style.overflow = 'hidden';
+  };
+
+  const hideDeleteFormHandler = () => {
+    setDeletePhotoForm(false);
+    document.querySelector('body').style.background = '#fff';
+    document.querySelector('body').style.overflow = 'visible';
+  };
+
   let displayPhoto;
   if (photoGrid.length !== 0) {
     displayPhoto = (
       <div className='PhotoGridContainer'>
-        {/* <div className='Cell c1'></div> */}
-        <PhotoComp classType='c1' imgSrc={photoGrid[0].imageLink} />
-        <PhotoComp classType='c2' imgSrc={photoGrid[1].imageLink} />
-        <PhotoComp classType='c3' imgSrc={photoGrid[2].imageLink} />
-        <PhotoComp classType='c4' imgSrc={photoGrid[3].imageLink} />
-        <PhotoComp classType='c5' imgSrc={photoGrid[4].imageLink} />
-        <PhotoComp classType='c6' imgSrc={photoGrid[5].imageLink} />
-        <PhotoComp classType='c7' imgSrc={photoGrid[6].imageLink} />
+        {photoGrid.slice(0, 7).map((photo, index) => (
+          <PhotoComp
+            key={index}
+            classType={`c${index + 1}`}
+            imgSrc={photo.imageLink}
+            photoLabel={photo.label}
+            DeleteBtnControl={DeleteBtnControl}
+            photoID={photo._id}
+          />
+        ))}
       </div>
     );
   }
 
   let photoByLabel;
   if (photoByLabelArray) {
-    photoByLabel = photoByLabelArray.map((photo) => (
+    photoByLabel = (
       <div>
         <Button onClick={() => window.location.reload()} variant='outline-dark'>
           Go Back
         </Button>
         <div className='PhotoByLabelContainer'>
-          <PhotoLabelComp key={photo._id} imgSrc={photo.imageLink} />
+          {photoByLabelArray.map((photo) => (
+            <PhotoLabelComp key={photo._id} imgSrc={photo.imageLink} />
+          ))}
         </div>
       </div>
-    ));
+    );
   }
 
   const inputValueHandler = (e) => {
@@ -88,6 +113,23 @@ const PhotoGrid = () => {
     setUrlValue('');
   };
 
+  const deleteBtnHandler = () => {
+    if (deletePassword === process.env.REACT_APP_DELETE_PWD) {
+      dispatch(deletePhoto(photoID));
+      setDeletePhotoForm(false);
+      pwdRef.current.value = '';
+      window.location.reload();
+    } else {
+      setPasswordError(
+        'You need to have admin password to perform this action'
+      );
+    }
+  };
+
+  const passwordValueHandler = (e) => {
+    setDeletePassword(e.target.value);
+  };
+
   const labelValueHandler = (e) => {
     setLabelValue(e.target.value);
   };
@@ -98,18 +140,30 @@ const PhotoGrid = () => {
 
   const showFormHandler = () => {
     setAddPhotoForm(true);
+    document.querySelector('body').style.background = '#bfbfbf';
+    document.querySelector('body').style.overflow = 'hidden';
   };
 
   const hideFormHandler = () => {
     setAddPhotoForm(false);
+    document.querySelector('body').style.background = '#fff';
+    document.querySelector('body').style.overflow = 'visible';
   };
 
-  // const getPhotoLabel = (e) => {
-  //   if (e.keyCode === 13) {
-  //     dispatch(getPhotoByLabel(inputValue));
-  //     e.target.value = '';
-  //   }
-  // };
+  // console.log(scrollPosition);
+
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     let reverse;
@@ -157,7 +211,7 @@ const PhotoGrid = () => {
       )}
       {loading || loadingPhotoByLabel ? <Loader /> : null}
       {allPhoto ? displayPhoto : photoLabel ? photoByLabel : null}
-      {/* {addPhotoForm ? (
+      {addPhotoForm ? (
         <AddPhotoComp
           submitBtnHandler={addPhotoHandler}
           labelValue={labelValueHandler}
@@ -167,7 +221,17 @@ const PhotoGrid = () => {
           hideForm={hideFormHandler}
           uploadError={uploadError}
         />
-      ) : null} */}
+      ) : null}
+      {deletePhotoForm ? (
+        <DeletePhotoComp
+          hideForm={hideDeleteFormHandler}
+          DeleteBtnHandler={deleteBtnHandler}
+          passwordValue={passwordValueHandler}
+          passwordRef={pwdRef}
+          pwdError={passwordError}
+          scrollPosition={scrollPosition}
+        />
+      ) : null}
     </>
   );
 };

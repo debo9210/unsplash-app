@@ -1,4 +1,7 @@
 import {
+  DELETE_PHOTO_FAIL,
+  DELETE_PHOTO_REQUEST,
+  DELETE_PHOTO_SUCCESS,
   GET_ALL_PHOTO_FAIL,
   GET_ALL_PHOTO_REQUEST,
   GET_ALL_PHOTO_SUCCESS,
@@ -61,6 +64,26 @@ export const uploadPhotoReducer = (state = {}, action) => {
         upload: action.payload,
       };
     case UPLOAD_PHOTO_BY_URL_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const deletePhotoReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_PHOTO_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_PHOTO_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload,
+      };
+    case DELETE_PHOTO_FAIL:
       return {
         loading: false,
         error: action.payload,
