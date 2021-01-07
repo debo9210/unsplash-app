@@ -111,6 +111,7 @@ const PhotoGrid = () => {
     urlRef.current.value = '';
     setLabelValue('');
     setUrlValue('');
+    window.location.reload();
   };
 
   const deleteBtnHandler = () => {
